@@ -1,0 +1,58 @@
+---
+- name: Create k8s App
+  hosts: all
+  tasks:  
+  - name: Create a k8s namespace
+    k8s:
+      name: "{{ k8s_namespace }}"
+      api_version: v1
+      kind: Namespace
+      state: present
+
+  - name: Deploy k8s App
+    k8s:
+      definition:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            name: "{{ k8s_name }}"
+          name: "{{ k8s_name }}"
+          namespace: "{{ k8s_namespace }}"
+        spec:
+         replicas: 1
+         selector:
+            matchLabels:
+              name: "{{ k8s_name }}"
+         template:
+           metadata:
+              labels:
+                name: "{{ k8s_name }}"
+           spec:
+              containers:
+              - image: "{{ k8s_image }}"
+                name: "{{ k8s_name }}"
+                ports:
+                - containerPort: "{{ k8s_targetport }}"
+                  name: "{{ k8s_name }}"
+
+  - name: Create k8s Service
+    k8s:
+      namespace: "{{ k8s_namespace }}"
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          name: "{{ k8s_name }}"
+          labels:
+            name: "{{ k8s_name }}"
+            namespace: "{{ k8s_namespace }}"
+        spec:
+          type: NodePort
+          ports:
+            - port: "{{ k8s_port }}"
+              nodePort: "{{ k8s_nodeport }}"
+              targetPort: "{{ k8s_targetport }}"
+              protocol: TCP
+          selector:
+            name: "{{ k8s_name }}"
