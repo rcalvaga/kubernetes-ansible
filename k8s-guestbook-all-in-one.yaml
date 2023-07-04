@@ -33,7 +33,7 @@
             spec:
               containers:
               - name: master
-                image: registry.k8s.io/redis:e2e  # or just image: redis
+                image: redis  # registry.k8s.io/redis:e2e or just image: redis
                 resources:
                   requests:
                     cpu: 100m
@@ -76,7 +76,7 @@
               app: redis
               role: replica
               tier: backend
-          replicas: 2
+          replicas: 1
           template:
             metadata:
               labels:
@@ -135,7 +135,7 @@
             matchLabels:
               app: guestbook
               tier: frontend
-          replicas: 3
+          replicas: 1
           template:
             metadata:
               labels:
