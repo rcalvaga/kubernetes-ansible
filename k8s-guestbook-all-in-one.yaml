@@ -179,6 +179,7 @@
           # type: LoadBalancer
           ports:
           - port: 80
+            nodePort: "{{ k8s_nodeport }}"
           selector:
             app: guestbook
             tier: frontend
