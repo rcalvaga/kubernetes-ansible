@@ -162,8 +162,8 @@
 
   - name: Create frontend service
     k8s:
-    namespace: "{{ k8s_namespace }}"
-    definition:
+      namespace: "{{ k8s_namespace }}"
+      definition:
         apiVersion: v1
         kind: Service
         metadata:
