@@ -160,10 +160,10 @@
                 ports:
                 - containerPort: 80
 
-    - name: Create frontend service
-      k8s:
-      namespace: "{{ k8s_namespace }}"
-      definition:
+  - name: Create frontend service
+    k8s:
+    namespace: "{{ k8s_namespace }}"
+    definition:
         apiVersion: v1
         kind: Service
         metadata:
