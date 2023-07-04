@@ -180,6 +180,7 @@
           ports:
           - port: 80
             nodePort: "{{ k8s_nodeport }}"
+            protocol: TCP
           selector:
             app: guestbook
             tier: frontend
