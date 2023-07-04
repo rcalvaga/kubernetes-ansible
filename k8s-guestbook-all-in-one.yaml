@@ -70,7 +70,7 @@
       kind: Deployment
       metadata:
           name: redis-replica
-        spec:
+      spec:
           selector:
             matchLabels:
               app: redis
