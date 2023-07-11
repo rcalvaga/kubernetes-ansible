@@ -11,15 +11,14 @@
       
   - name: Deploy Kubedoom app
     k8s:
-      namespace: "{{ k8s_namespace }}"
       definition:
         apiVersion: apps/v1
         kind: Deployment
         metadata:
           labels:
             app: kubedoom
-            name: kubedoom
-            namespace: "{{ k8s_namespace }}"
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
         spec:
           replicas: 1
           selector:
@@ -44,7 +43,6 @@
                 
   - name: Create kubedoom service account
     k8s:
-      namespace: "{{ k8s_namespace }}"
       definition:
         apiVersion: v1
         kind: ServiceAccount
@@ -78,8 +76,8 @@
         metadata:
           labels:
             app: kubedoom
-            name: kubedoom
-            namespace: "{{ k8s_namespace }}"
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
           spec:
              type: NodePort
              ports:
