@@ -29,7 +29,7 @@
               labels:
                 app: kubedoom
             spec:
-#              hostNetwork: true
+              hostNetwork: true
               serviceAccountName: kubedoom
               containers:
                 - image: ghcr.io/storax/kubedoom:latest
@@ -66,24 +66,3 @@
           - kind: ServiceAccount
             name: kubedoom
             namespace: "{{ k8s_namespace }}"
-
-  - name: Create kubedoom service
-    k8s:
-      namespace: "{{ k8s_namespace }}"
-      definition:
-        apiVersion: v1
-        kind: Service
-        metadata:
-          labels:
-            app: kubedoom
-          name: kubedoom
-          namespace: "{{ k8s_namespace }}"
-          spec:
-             type: NodePort
-             ports:
-             - port: "{{ k8s_vncport }}"
-               nodePort: "{{ k8s_nodeport }}"
-               protocol: TCP
-             selector:
-               app: kubedoom
-               name: kubedoom
