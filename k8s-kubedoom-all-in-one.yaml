@@ -38,7 +38,7 @@
                       value: default
                   name: kubedoom
                   ports:
-                    - containerPort: "{{ k8s_vncport }}"
+                    - containerPort: 5900
                       name: vnc
                 
   - name: Create kubedoom service account
@@ -66,3 +66,24 @@
           - kind: ServiceAccount
             name: kubedoom
             namespace: "{{ k8s_namespace }}"
+
+  - name: Create kubedoom service
+    k8s:
+      namespace: "{{ k8s_namespace }}"
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          labels:
+            app: kubedoom
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
+          spec:
+             type: NodePort
+             ports:
+             - port: 5900
+               nodePort: "{{ k8s_nodeport }}"
+               protocol: TCP
+             selector:
+               app: kubedoom
+               name: kubedoom
