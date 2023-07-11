@@ -34,7 +34,7 @@
               containers:
                 - image: ghcr.io/storax/kubedoom:latest
                   args:
-                    - "--build-arg=VNCPASSWORD=Redhat1!"
+                    - "VNCPASSWORD=Redhat1!"
                   env:
                     - name: "{{ k8s_namespace }}"
                       value: default
