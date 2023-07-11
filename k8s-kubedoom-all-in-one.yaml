@@ -52,7 +52,6 @@
 
   - name: Create kubedoom ClusterRoleBinding
     k8s:
-      namespace: "{{ k8s_namespace }}"
       definition:  
         apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRoleBinding
@@ -69,7 +68,6 @@
 
   - name: Create kubedoom service
     k8s:
-      namespace: "{{ k8s_namespace }}"
       definition:
         apiVersion: v1
         kind: Service
