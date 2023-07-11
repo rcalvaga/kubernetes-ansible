@@ -1,0 +1,67 @@
+---
+- name: Create k8s Guestbook App
+  hosts: all
+  tasks: 
+  - name: Create a k8s namespace
+    k8s:
+      name: "{{ k8s_namespace }}"
+      api_version: v1
+      kind: Namespace
+      state: present
+      
+  - name: Deploy Kubedoom app
+    k8s:
+      definition:
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          labels:
+            app: kubedoom
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
+        spec:
+          replicas: 1
+          selector:
+            matchLabels:
+              app: kubedoom
+          template:
+            metadata:
+              labels:
+                app: kubedoom
+            spec:
+              hostNetwork: true
+              serviceAccountName: kubedoom
+              containers:
+                - image: ghcr.io/storax/kubedoom:latest
+                  env:
+                    - name: "{{ k8s_namespace }}"
+                      value: default
+                  name: kubedoom
+                  ports:
+                    - containerPort: "{{ k8s_vncport }}"
+                      name: vnc
+                
+  - name: Create kubedoom service account
+    k8s:
+      definition:
+        apiVersion: v1
+        kind: ServiceAccount
+        metadata:
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
+
+  - name: Create kubedoom ClusterRoleBinding
+    k8s:
+      definition:  
+        apiVersion: rbac.authorization.k8s.io/v1
+        kind: ClusterRoleBinding
+        metadata:
+          name: kubedoom
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: cluster-admin
+        subjects:
+          - kind: ServiceAccount
+            name: kubedoom
+            namespace: "{{ k8s_namespace }}"
