@@ -85,7 +85,6 @@
                targetport: vnc
              selector:
                app: kubedoom
-               name: kubedoom
 
   - name: Create kubedoom Ingress Route
     k8s:
