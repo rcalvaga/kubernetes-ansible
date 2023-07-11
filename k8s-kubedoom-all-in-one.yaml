@@ -32,7 +32,7 @@
               hostNetwork: false
               serviceAccountName: kubedoom
               containers:
-                - image: quay.io/rcalvaga/kubedoom:latest
+                - image: "{{ k8s_image }}"
                   env:
                     - name: "{{ k8s_namespace }}"
                       value: default
