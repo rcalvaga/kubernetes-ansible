@@ -29,7 +29,7 @@
               labels:
                 app: kubedoom
             spec:
-              hostNetwork: true
+              hostNetwork: false
               serviceAccountName: kubedoom
               containers:
                 - image: ghcr.io/storax/kubedoom:latest
@@ -82,7 +82,7 @@
              - port: 5900
                #nodePort: "{{ k8s_nodeport }}"
                protocol: TCP
-               name: vnc
+               targetport: vnc
              selector:
                app: kubedoom
                name: kubedoom
