@@ -66,3 +66,33 @@
             name: kubedoom
             namespace: "{{ k8s_namespace }}"
 
+  - name: Create kubedoom service
+    k8s:
+      namespace: "{{ k8s_namespace }}"
+      definition:
+        apiVersion: v1
+        kind: Service
+        metadata:
+          labels:
+            app: kubedoom
+          name: kubedoom
+          namespace: "{{ k8s_namespace }}"
+        spec:
+          clusterIP: 10.152.183.47
+          clusterIPs:
+          - 10.152.183.47
+          externalTrafficPolicy: Cluster
+          internalTrafficPolicy: Cluster
+          ipFamilies:
+          - IPv4
+          ipFamilyPolicy: SingleStack
+          ports:
+          - nodePort: "{{ k8s_nodeport }}"
+            port: 5900
+            protocol: TCP
+            targetPort: 5900
+          selector:
+            app: kubedoom
+          sessionAffinity: None
+          type: NodePort	
+
