@@ -32,7 +32,6 @@
               hostNetwork: false
               serviceAccountName: kubedoom
               containers:
-                #- image: ghcr.io/storax/kubedoom:latest
                 - image: quay.io/rcalvaga/kubedoom:latest
                   env:
                     - name: "{{ k8s_namespace }}"
