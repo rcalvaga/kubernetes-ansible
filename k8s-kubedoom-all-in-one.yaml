@@ -77,7 +77,7 @@
           name: kubedoom
           namespace: "{{ k8s_namespace }}"
           spec:
-             type: NodePort
+             type: LoadBalancer
              ports:
              - port: 5900
                #nodePort: "{{ k8s_nodeport }}"
