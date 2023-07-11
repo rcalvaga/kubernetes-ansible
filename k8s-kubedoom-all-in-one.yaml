@@ -1,5 +1,5 @@
 ---
-- name: Create k8s Guestbook App
+- name: Create k8s Kubedoom App
   hosts: all
   tasks: 
   - name: Create a k8s namespace
@@ -32,7 +32,8 @@
               hostNetwork: false
               serviceAccountName: kubedoom
               containers:
-                - image: ghcr.io/storax/kubedoom:latest
+                #- image: ghcr.io/storax/kubedoom:latest
+                - image: quay.io/rcalvaga/kubedoom:latest
                   env:
                     - name: "{{ k8s_namespace }}"
                       value: default
