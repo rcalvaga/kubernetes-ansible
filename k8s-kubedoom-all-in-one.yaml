@@ -29,7 +29,7 @@
               labels:
                 app: kubedoom
             spec:
-              hostNetwork: true
+#              hostNetwork: true
               serviceAccountName: kubedoom
               containers:
                 - image: ghcr.io/storax/kubedoom:latest
@@ -81,9 +81,9 @@
           spec:
              type: NodePort
              ports:
-              - port: "{{ k8s_vncport }}"
-                nodePort: "{{ k8s_nodeport }}"
-                protocol: TCP
+             - port: "{{ k8s_vncport }}"
+               nodePort: "{{ k8s_nodeport }}"
+               protocol: TCP
              selector:
                app: kubedoom
                name: kubedoom
